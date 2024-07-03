@@ -15,6 +15,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Factory;
 import org.testng.annotations.Test;
 
 public class TestScenario1 
@@ -25,12 +26,10 @@ public class TestScenario1
 	String osVersion;
 	
 	@BeforeMethod
-	@org.testng.annotations.Parameters({"browserName", "browserVersion", "osVersion"})
-	public void setup(String browserName, String browserVersion, String osVersion) throws MalformedURLException
+	
+	public void setup() throws MalformedURLException
 	{
-		this.browserName = browserName;
-		this.browserVersion = browserVersion;
-	    this.osVersion = osVersion;
+		
 	    
         System.out.println("Starting test with browser: " + browserName + ", version: " + browserVersion + ", OS: " + osVersion);
 
@@ -89,8 +88,8 @@ public class TestScenario1
 	}
 	
 	
-@Test(dataProvider = "browserAndOsProvider", dataProviderClass = TestDataProvider.class)
-public void initializeTestScenario(String browserName, String browserVersion, String osVersion) 
+@Test
+public void initializeTestScenario() 
 {
 //    this.browserName = browserName;
 //	this.browserVersion = browserVersion;
@@ -98,7 +97,13 @@ public void initializeTestScenario(String browserName, String browserVersion, St
     testscenario();
 }
 	
-
+@Factory(dataProvider = "browserAndOsProvider", dataProviderClass = TestDataProvider.class)
+public TestScenario1(String browserName, String browserVersion, String osVersion) 
+{
+  this.browserName = browserName;
+  this.browserVersion = browserVersion;
+  this.osVersion = osVersion;
+}
 
 public void testscenario()
 {
